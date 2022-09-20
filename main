@@ -1,0 +1,207 @@
+function setup() {
+	createCanvas(windowWidth, windowHeight);
+	background(255);
+	
+	x =  random(0,windowWidth);
+	
+}
+
+var x; 
+var y =  0;
+var gravity = 10;
+var points = 0;
+var redX = 50;
+var blueX = 950;
+var redY = 500;
+var blueY = 500;
+var x3 = 0;
+var y3 = 0;
+var yt = 5;
+var xt = 5;
+var yt2 = -5;
+var xt2 = -5;
+var x2 = 1920;
+var y2 = 887;
+
+function counter() {
+noFill();
+stroke("white");
+ellipse (1430,100,100);
+}
+
+
+function rock() {
+fill("green");
+noStroke();
+ellipse(x, y, 100);
+}
+
+
+function score() {
+strokeWeight(3);
+stroke("black");
+noFill();
+textSize (32);
+text(points, 1400,100);
+}
+
+
+function person_A() {
+stroke("red");
+strokeWeight(5);
+ellipse (redX+50, redY, 54);
+line(redX,redY+40,redX+100,redY+40);
+line (redX+50, redY+27, redX+50, redY+70);
+line(redX+50,redY+70,redX+20,redY+100);
+line(redX+50,redY+70,redX+80,redY+100);
+}
+
+
+function person_B() {
+stroke("blue");
+strokeWeight(5);
+ellipse (blueX+50, blueY, 54);
+line(blueX,blueY+40,blueX+100,blueY+40);
+line (blueX+50, blueY+27, blueX+50, blueY+70);
+line(blueX+50,blueY+70,blueX+20,blueY+100);
+line(blueX+50,blueY+70,blueX+80,blueY+100);
+}
+
+function fail() {
+	
+background ('red');
+	stroke('white');
+	strokeWeight(5);
+	textSize (64);
+	text(points, windowWidth/2,windowHeight/2);
+	noLoop();
+}
+	
+
+function move() {
+	stroke ('black');
+	strokeWeight (4);
+textSize (64);
+	text ('red : right = right arrow, left = left arrow, up = up arrow, down = down arrow | blue: right = D, left = A, up = W, down = S',200,1400);
+}
+
+
+
+function draw() {
+	function ball() {
+	ellipse(x3, y3, 50, 50);
+	x3 = x3+xt;
+	y3 = y3+yt;
+if (y3 >= windowHeight) {
+yt = -5-level;
+	}
+	if ( x3>=windowWidth) {
+			xt = -5-level;
+	}
+	if (y3 <= 0 ) {
+	yt = 5+level;
+		}
+if (x3<=0) {
+	xt = 5+level;
+}
+}
+
+function ball2() {
+	ellipse(x2, y2, 50, 50);
+	x2 = x2+xt2;
+	y2 = y2+yt2;
+if (y2 >= windowHeight) {
+yt2 = -5-level;
+	}
+	if ( x2>=windowWidth) {
+			xt2 = -5-level;
+	}
+	if (y2 <= 0 ) {
+	yt2 = 5+level;
+		}
+if (x2<=0) {
+	xt2 = 5+level;
+}
+}
+
+	
+	
+var level = points / 3
+if (keyIsDown(RIGHT_ARROW)) {
+blueX = blueX + 10;	
+}
+	
+if (keyIsDown(LEFT_ARROW)) {
+blueX = blueX - 10;	
+}
+if (keyIsDown(UP_ARROW)) {
+blueY= blueY - 10;	
+}
+if (keyIsDown(DOWN_ARROW)) {
+blueY = blueY + 10;	
+}
+	
+if (keyIsDown(65)) {
+redX = redX - 10;	
+}
+	
+if (keyIsDown(68)) {
+redX = redX + 10;	
+}
+if (keyIsDown(87)) {
+redY = redY - 10;	
+}
+	if (keyIsDown(83)) {
+redY = redY + 10;	
+}
+	
+if (y > redY && y<redY+100 && x > redX-100 && x<redX+100 || y > blueY && y<blueY+100 && x > blueX-100 && x<blueX+100 || y3 > blueY && y3<blueY+100 && x3 > blueX-100 && x3<blueX+100 || y2 > blueY && y2<blueY+100 && x2 > blueX-100 && x2<blueX+100 ||y3 > redY && y3<redY+100 && x3 > redX-100 && x3<redX+100 || y2 > redY && y2<redY+100 && x2 > redX-100 && x2<redX+100) {
+		fail();
+	clear();
+	if(points == 69){
+		textSize (128);
+		text('nice', windowWidth/2,windowHeight/2);
+		text(points, windowWidth/2, windowHeight/2+128)
+	}else{
+	textSize (128);
+	text('You lose',windowWidth/2,windowHeight/2);
+	text (points,windowWidth/2, windowHeight/2 + 128);
+}} else {
+clear();
+move();
+person_A();
+person_B();
+rock();	
+	y = y+gravity+level;
+	if ( y > windowHeight) {
+			y = -y; 
+		points = points + 3;
+		  x = random (0, 1536); }
+	ball();
+	ball2();
+	if (redX > windowWidth)
+			{
+				redX = -redX
+		}
+
+	
+		if (blueX > windowWidth)
+			{
+				blueX = -blueX
+		}
+	
+		if (redY > windowHeight)
+			{
+				redY = -redY
+		}
+			
+			if (blueY > windowHeight)
+			{
+				blueY = -blueY
+		}
+			
+ score();
+ counter();
+
+}
+}
